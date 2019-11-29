@@ -257,21 +257,19 @@
         .lower {
             margin-top: 0px;
         }
-
+        
         .outgoing {
-            position: relative;
-            padding: 5px;
-            right: 0;
-            top: 15%;
-            width: 90%;
+            width: 100%;
             height: 100%;
+            padding: 5px;
+            float:right;
         }
 
             .outgoing .bubble {
                 background: #79c7c5;
-                float: right;
+                float:right;
             }
-
+            
         .bottom-bar {
             position: absolute;
             width: 100%;
@@ -382,44 +380,34 @@
                       <div class="dots"></div>
                   </div>
               </div>
-              <div class="middle">
-                  <div class="CS20">
+              <div class="middle" id ="messageBox">
+                  <div class="CS20" id="displayMessage">
                       <div class="incoming">
-                          <div class="bubble">Hey, Presentation is coming up... We should work on the project!</div>
+                          <div class="bubble">Hey, this chatbox is being worked on progress</div>
                       </div>
                       <div class="incoming">
-                          <div class="bubble">Hey, Presentation is coming up..</div>
+                          <div class="bubble">the presentation is coming up..</div>
                       </div>
                       <div class="outgoing">
-                          <div class="bubble lower">Nah, it's cool. We have a lot of time left, so don't worry!</div>
+                          <div class="bubble">Nah, it's cool. We have a lot of time left, so don't worry!</div>
                       </div>
-                      <div class="incoming">
-                          <div class="bubble">Hey, Presentation is coming up..</div>
-                      </div>
-                      <div class="incoming">
-                          <div class="bubble">Hey, Presentation is coming up..</div>
-                      </div>
-                      <div class="outgoing">
-                          <div class="bubble lower">Nah, it's cool. We have a lot of time left, so don't worry!</div>
-                      </div>
-                      <div class="outgoing">
-                          <div class="bubble lower">Nah, it's cool. We have a lot of time left, so don't worry!</div>
-                      </div>
-                      <!--
-                    <div class="typing">
-                        <div class="bubble">
-                            <div class="ellipsis one"></div>
-                            <div class="ellipsis two"></div>
-                            <div class="ellipsis three"></div>
+                    
+                      <!-- use it for while typing...
+                        <div class="typing">
+                            <div class="bubble">
+                                <div class="ellipsis one"></div>
+                                <div class="ellipsis two"></div>
+                                <div class="ellipsis three"></div>
+                            </div>
                         </div>
-                    </div>
                        -->
+                       
                   </div>
               </div>
               <div class="bottom-bar">
                   <div class="chat">
-                      <input type="text" placeholder="Type a message..." />
-                      <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                      <input type="text" id="chatInput" placeholder="Type a message..."/>
+                      <button type="submit" onclick="sendMsg()"><i class="fas fa-paper-plane"></i></button>
                   </div>
               </div>
           </div>
@@ -447,13 +435,70 @@
               </li>
           </ul>
       </div>
-
+      <script src="/socket.io/socket.io.js"></script>
       <script>
-          // get username from the first page
-          var userName = localStorage.getItem("userName")
-          console.log(userName);
-          // Display username 
-          document.getElementById("username").innerHTML = userName;
+        const room = 'CS420';
+        const socket = io('/tech'); 
+        var self_sending = false;
+        // get username from the first page
+        var userName = localStorage.getItem("userName")
+        console.log(userName);
+        // Display username 
+        document.getElementById("username").innerHTML = userName;
+
+        // chat functionality
+        socket.on('connect', ()=> {
+        // emiting to everybody
+        socket.emit('join', {room: room, userName});
+        });
+
+
+        function sendMsg() {
+            self_sending = true;
+            var message = document.getElementById("chatInput").value;
+            //document.getElementById("displayMessage").innerHTML += outComingMessage(message);
+            //message = outComingMessage(message);
+            console.log(message);
+            // when you send message
+            socket.emit('message', {msg:message, room});
+            console.log(message);
+            document.getElementById("chatInput").value = null;
+            return false;
+            
+        }      
+       
+        
+        socket.on('message', (msg) => {
+            console.log("broadcast:", msg);
+            if(self_sending == true){
+                document.getElementById("displayMessage").innerHTML += outcomingMessage(msg);
+            }
+            else{
+                document.getElementById("displayMessage").innerHTML += incomingMessage(msg);
+
+            }
+            //$('#messages').append($(incomingMessage).text(msg));
+            //document.getElementById("displayMessage").scrollIntoView(false);
+            //window.scrollTo(0, i+=100);
+
+            var objDiv = document.getElementById("messageBox");
+            objDiv.scrollTop = objDiv.scrollHeight;
+            self_sending = false;
+      });
+   
+
+      function incomingMessage(inputMessage){
+          return ` <div class="incoming"> <div class="bubble">${inputMessage}</div></div>`;
+      }
+      function outcomingMessage(inputMessage){
+          return ` <div class="outgoing"> <div class="bubble">${inputMessage}</div></div>`;
+      }
+      // autoscrolling
+      function pageScroll() {
+            window.scrollBy(0,1);
+            scrolldelay = setTimeout(pageScroll,10);
+        }   
+
       </script>
       </body>
 </html>
