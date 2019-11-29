@@ -447,13 +447,10 @@
 
         function sendMsg() {
             self_sending = true;
-            var message = document.getElementById("chatInput").value;
-            //document.getElementById("displayMessage").innerHTML += outComingMessage(message);
-            //message = outComingMessage(message);
-            console.log(message);
+            var message = userName + ": " + document.getElementById("chatInput").value;
+            
             // when you send message
             socket.emit('message', {msg:message, room});
-            console.log(message);
             document.getElementById("chatInput").value = null;
             return false;
             
