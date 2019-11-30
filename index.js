@@ -45,7 +45,7 @@ const tech = io.of('/tech');
 tech.on('connection', (socket) => {
     
 
-    socket.on('subscribe', (data) =>{
+    socket.on('join', (data) =>{
         socket.join(data.room);
         socket.username = data.userName;
         socket.room = data.room;
@@ -58,7 +58,7 @@ tech.on('connection', (socket) => {
         tech.in(data.room).emit('message', data.msg);
     });
 
-    socket.on('unsubscribe', ()=> {
+    socket.on('disconnect', ()=> {
         var connectionMessage = socket.username + " has disconnected";
         console.log(connectionMessage);
         tech.in(socket.room).emit('message', `${socket.username} left the room!`);
