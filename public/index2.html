@@ -383,7 +383,7 @@
                   </div>
               </div>
               <div class="middle" id ="messageBox1">
-                  <div class="CS420" id="displayMessage">
+                  <div class="CS420" id="displayMessage1">
                       <!-- use it for while typing...
                         <div class="typing">
                             <div class="bubble">
@@ -396,11 +396,11 @@
                   </div>
               </div>
               <div class="middle" id ="messageBox2">
-                    <div class="CS420" id="displayMessage">
+                    <div class="CS420" id="displayMessage2">
                     </div>
                 </div>
                 <div class="middle" id ="messageBox3">
-                        <div class="CS420" id="displayMessage">
+                        <div class="CS420" id="displayMessage3">
                         </div>
                     </div>
               
@@ -439,6 +439,10 @@
       <script>
         // we want room to be mutatable 
         var room = 'CS420';
+        // check if user has joined the room yet
+        var room2 = false;
+        var room3 = false;
+        // check if rooms has been joined or not
         const socket = io('/tech'); 
         // if self sending is false, new messages will append in the chatbox
         var self_sending = false;
@@ -459,8 +463,9 @@
 
         function sendMsg() {
             self_sending = true;
-            var message = userName + ": " + document.getElementById("chatInput").value;
-            
+            var message = new Object;
+            message.msg = userName + ": " + document.getElementById("chatInput").value;
+            message.room = room;
             // when you send message
             socket.emit('message', {msg:message, room});
             console.log(message);
@@ -470,23 +475,40 @@
         }      
        
         
-        socket.on('message', (msg) => {
-            console.log("broadcast:", msg);
-            if(self_sending == true){
-                document.getElementById("displayMessage").innerHTML += outcomingMessage(msg);
-            }
-            else{
-                document.getElementById("displayMessage").innerHTML += incomingMessage(msg);
-
-            }
+        socket.on('message', (response) => {
+            //console.log("broadcast:", response);
+            console.log("broadcast:", response.msg);
+            console.log("broadcast:", response.room);
             var objDiv
-            if(room === "CS420")
+            if(response.room === "CS420"){
                 objDiv = document.getElementById("messageBox1");
-            else if(room === "CS472")
-                objDiv = document.getElementById("messageBox2");
-            else if(room === "STAT411"){
-                objDiv = document.getElementById("messageBox3");
+                if(self_sending == true){
+                    document.getElementById("displayMessage1").innerHTML += outcomingMessage(response.msg);
+                }
+                else{
+                    document.getElementById("displayMessage1").innerHTML += incomingMessage(response.msg);
+                }
             }
+            if(response.room === "CS472"){
+                objDiv = document.getElementById("messageBox2");
+                if(self_sending == true){
+                    document.getElementById("displayMessage2").innerHTML += outcomingMessage(response.msg);
+                }
+                else{
+                    document.getElementById("displayMessage2").innerHTML += incomingMessage(response.msg);
+                }
+            }
+            if(response.room === "STAT411"){
+                objDiv = document.getElementById("messageBox3");
+                if(self_sending == true){
+                    document.getElementById("displayMessage3").innerHTML += outcomingMessage(response.msg);
+                }
+                else{
+                    document.getElementById("displayMessage3").innerHTML += incomingMessage(response.msg);
+                }
+            }
+            
+           
             
             objDiv.scrollTop = objDiv.scrollHeight;
             self_sending = false;
@@ -517,6 +539,8 @@
             document.getElementById("messageBox3").style.display = "none";
             // display tab 1
             document.getElementById("messageBox1").style.display = "block";
+            // set room
+            room = 'CS420';
             
         }
         function tab2(){
@@ -529,7 +553,12 @@
             document.getElementById("messageBox3").style.display = "none";
             // display tab 2
             document.getElementById("messageBox2").style.display = "block";
-
+            // set room
+            room = 'CS472';
+            if(room2 == false){
+                socket.emit('join', {room: room, userName});
+                room2 = true;
+            }
 
         }
         function tab3(){
@@ -542,7 +571,12 @@
             document.getElementById("messageBox2").style.display = "none";
             // display tab 3
             document.getElementById("messageBox3").style.display = "block";
-
+            // set room
+            room = 'STAT411';
+            if(room3 == false){
+                socket.emit('join', {room: room, userName});
+                room3 = true;
+            }
         }
 
       </script>

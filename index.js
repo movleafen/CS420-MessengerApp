@@ -49,8 +49,11 @@ tech.on('connection', (socket) => {
         socket.join(data.room);
         socket.username = data.userName;
         socket.room = data.room;
-        console.log(`${socket.username} has connected`);
-        tech.in(data.room).emit('message', `${data.userName} joined ${data.room} room!`);
+        console.log(`${socket.username} has connected to ${data.room}`);
+        var message = new Object;
+        message.msg = `${data.userName} joined ${data.room} room!`
+        message.room = data.room;
+        tech.in(data.room).emit('message', message);
     })
 
     socket.on('message', (data) =>{
