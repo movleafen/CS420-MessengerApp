@@ -193,6 +193,7 @@
         }
 
         .middle {
+            display: none;
             position: absolute;
             background: #f9fbff;
             width: 100%;
@@ -363,6 +364,7 @@
                 opacity: 0.5;
             }
         }
+       
     </style>
 </head>
   <body>
@@ -371,7 +373,7 @@
           <div class="chatbox">
               <div class="top-bar">
                   <div class="avatar"><p>CS</p></div>
-                  <div class="name">CS420 Class</div>
+                  <div class="name" id=displayClassTittle>CS420 Class</div>
                   <div class="icons">
                       <i class="fas fa-phone"></i>
                       <i class="fas fa-video"></i>
@@ -380,10 +382,8 @@
                       <div class="dots"></div>
                   </div>
               </div>
-              <div class="middle" id ="messageBox">
-                  <div class="CS20" id="displayMessage">
-                      
-                    
+              <div class="middle" id ="messageBox1">
+                  <div class="CS420" id="displayMessage">
                       <!-- use it for while typing...
                         <div class="typing">
                             <div class="bubble">
@@ -393,9 +393,17 @@
                             </div>
                         </div>
                        -->
-                       
                   </div>
               </div>
+              <div class="middle" id ="messageBox2">
+                    <div class="CS420" id="displayMessage">
+                    </div>
+                </div>
+                <div class="middle" id ="messageBox3">
+                        <div class="CS420" id="displayMessage">
+                        </div>
+                    </div>
+              
               <div class="bottom-bar">
                   <div class="chat">
                       <input type="text" id="chatInput" placeholder="Type a message..."/>
@@ -410,13 +418,13 @@
           </div>
           <ul class="classroom">
 
-              <li class="room" onclick="tab1()" id="firstTab">
-                  <span class="title">CS472</span>
+              <li class="room focus" onclick="tab1()" id="firstTab">
+                  <span class="title">CS420</span>
                   <span class="time">2:25pm</span><br>
                   <span class="preview">last message line...</span>
               </li>
-              <li class="room focus" onclick="tab2()" id="secondTab">
-                  <span class="title">CS420 </span>
+              <li class="room" onclick="tab2()" id="secondTab">
+                  <span class="title">CS472 </span>
                   <span class="time">2:50pm</span><br>
                   <span class="preview">last message line...</span>
               </li>
@@ -429,19 +437,23 @@
       </div>
       <script src="/socket.io/socket.io.js"></script>
       <script>
-        const room = 'CS420';
+        // we want room to be mutatable 
+        var room = 'CS420';
         const socket = io('/tech'); 
+        // if self sending is false, new messages will append in the chatbox
         var self_sending = false;
         // get username from the first page
         var userName = localStorage.getItem("userName")
         console.log(userName);
         // Display username 
         document.getElementById("username").innerHTML = userName;
+        // inintial tab display 
+        document.getElementById("messageBox1").style.display = "block";
 
         // chat functionality
         socket.on('connect', ()=> {
         // emiting to everybody
-        socket.emit('join', {room: room, userName});
+        socket.emit('subscribe', {room: room, userName});
         });
 
 
@@ -466,9 +478,7 @@
                 document.getElementById("displayMessage").innerHTML += incomingMessage(msg);
 
             }
-            //$('#messages').append($(incomingMessage).text(msg));
-            //document.getElementById("displayMessage").scrollIntoView(false);
-            //window.scrollTo(0, i+=100);
+
 
             var objDiv = document.getElementById("messageBox");
             objDiv.scrollTop = objDiv.scrollHeight;
@@ -493,16 +503,47 @@
             document.getElementById("firstTab").className = "room focus";
             document.getElementById("secondTab").className = "room";
             document.getElementById("thirdTab").className = "room";
+            // set room to the first tab
+            document.getElementById("displayClassTittle").innerHTML = "CS472 Class";
+            // hide tab 2 and 3
+            document.getElementById("messageBox2").style.display = "none";
+            document.getElementById("messageBox3").style.display = "none";
+            // display tab 1
+            document.getElementById("messageBox1").style.display = "block";
+
+
+            //room = 'cs472';
+            
+            // join the first room
+           // room = "CS472";
+            
+
+            
         }
         function tab2(){
             document.getElementById("firstTab").className = "room";
             document.getElementById("secondTab").className = "room focus";
             document.getElementById("thirdTab").className = "room";
+            document.getElementById("displayClassTittle").innerHTML = "CS420 class";
+            // hide tab 1 and 3
+            document.getElementById("messageBox1").style.display = "none";
+            document.getElementById("messageBox3").style.display = "none";
+            // display tab 2
+            document.getElementById("messageBox2").style.display = "block";
+
+
         }
         function tab3(){
             document.getElementById("firstTab").className = "room";
             document.getElementById("secondTab").className = "room";
             document.getElementById("thirdTab").className = "room focus";
+            document.getElementById("displayClassTittle").innerHTML = "STAT411 class";
+            // hide tab 1 and 2
+            document.getElementById("messageBox1").style.display = "none";
+            document.getElementById("messageBox2").style.display = "none";
+            // display tab 3
+            document.getElementById("messageBox3").style.display = "block";
+
         }
 
       </script>
