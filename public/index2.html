@@ -453,7 +453,7 @@
         // chat functionality
         socket.on('connect', ()=> {
         // emiting to everybody
-        socket.emit('subscribe', {room: room, userName});
+        socket.emit('join', {room: room, userName});
         });
 
 
@@ -463,6 +463,7 @@
             
             // when you send message
             socket.emit('message', {msg:message, room});
+            console.log(message);
             document.getElementById("chatInput").value = null;
             return false;
             
@@ -478,9 +479,15 @@
                 document.getElementById("displayMessage").innerHTML += incomingMessage(msg);
 
             }
-
-
-            var objDiv = document.getElementById("messageBox");
+            var objDiv
+            if(room === "CS420")
+                objDiv = document.getElementById("messageBox1");
+            else if(room === "CS472")
+                objDiv = document.getElementById("messageBox2");
+            else if(room === "STAT411"){
+                objDiv = document.getElementById("messageBox3");
+            }
+            
             objDiv.scrollTop = objDiv.scrollHeight;
             self_sending = false;
         });
@@ -510,14 +517,6 @@
             document.getElementById("messageBox3").style.display = "none";
             // display tab 1
             document.getElementById("messageBox1").style.display = "block";
-
-
-            //room = 'cs472';
-            
-            // join the first room
-           // room = "CS472";
-            
-
             
         }
         function tab2(){
