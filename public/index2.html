@@ -422,7 +422,7 @@
           </div>
           <div class="messages"></div>
           <div class="profile">
-              <div class="avatar"><p>H</p></div>
+              <div class="avatar"><p id="userIcon">H</p></div>
               <div class="name2"id="username">You're Harry</div>
           </div>
           <ul class="classroom">
@@ -462,6 +462,8 @@
         document.getElementById("username").innerHTML = userName;
         // inintial tab display 
         document.getElementById("messageBox1").style.display = "block";
+        // display user icon with their initial
+        document.getElementById("userIcon").innerHTML = userName.charAt(0);
 
         // chat functionality
         socket.on('connect', ()=> {
@@ -469,6 +471,12 @@
         socket.emit('join', {room: room, userName});
         });
 
+         // when the user press enter on chat, it will hit submit function
+         document.getElementById('chatInput').onkeydown = function(e){
+            if(e.keyCode == 13){
+                sendMsg();
+            }
+        };
 
         function sendMsg() {
             self_sending = true;
