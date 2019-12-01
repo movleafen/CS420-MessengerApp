@@ -255,6 +255,16 @@
             border-radius: 20px;
         }
 
+        .timeStamp {
+            display: inline-block;
+            margin-bottom: 5px;
+            color: #777;
+            font-size: 0.7em;
+            border-radius: 20px;
+            text-align: right;
+            padding-right: 5px;
+        }
+
         .lower {
             margin-top: 0px;
         }
@@ -262,7 +272,6 @@
         .outgoing {
             width: 100%;
             height: 100%;
-            padding: 5px;
             float:right;
         }
 
@@ -470,6 +479,7 @@
             socket.emit('message', {msg:message, room});
             console.log(message);
             document.getElementById("chatInput").value = null;
+            myFunction();
             return false;
             
         }      
@@ -516,10 +526,14 @@
    
 
         function incomingMessage(inputMessage){
-            return ` <div class="incoming"> <div class="bubble">${inputMessage}</div></div>`;
+            var D = new Date();
+            var N = D.toLocaleTimeString();
+            return ` <div style="float:left;" class="incoming"> <div class="bubble">${inputMessage}</div></br><div class="timeStamp" style="padding-left:3px; float:left;">${N}</div>`;
         }
         function outcomingMessage(inputMessage){
-            return ` <div class="outgoing"> <div class="bubble">${inputMessage}</div></div>`;
+            var d = new Date();
+            var n = d.toLocaleTimeString();
+            return ` <div class="outgoing"> <div class="bubble">${inputMessage}</div></div></br><div class="timeStamp" style="float:right;">${n}</div>`;
         }
         // autoscrolling
         function pageScroll() {
@@ -578,7 +592,6 @@
                 room3 = true;
             }
         }
-
       </script>
       </body>
 </html>
