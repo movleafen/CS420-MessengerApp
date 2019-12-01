@@ -552,7 +552,7 @@
             if(document.getElementById("chatInput").value !== ""){
                 self_sending = true;
                 var message = new Object;
-                message.msg = userName + ": " + document.getElementById("chatInput").value;
+                message.msg = document.getElementById("chatInput").value;
                 message.room = room;
                 message.user = userName;
                 // when you send message
