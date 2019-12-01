@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Chatter</title>
+    <title>TikTalk</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,8 +15,15 @@
 
         body {
             display: grid;
-            background: linear-gradient(to bottom left, #79c7c5 40%, #f9fbff 100%);
             font-family: 'Lato', sans-serif;
+        }
+
+        .lightMode {
+            background: linear-gradient(to bottom left, #79c7c5 40%, #f9fbff 100%);
+        }
+
+        .darkMode {
+            background: linear-gradient(to bottom left,  #202225 40%, #313636 100%);
         }
 
         .container {
@@ -52,19 +59,17 @@
                 font-size: 0.7em;
                 margin-left: 14px;
                 letter-spacing: 1px;
-                color: #777;
             }
 
             .classroom .time {
                 font-size: 0.3em;
-                color: #777;
                 position: absolute;
                 right: 10px;
                 margin-top: 2px;
             }
 
             .classroom .preview {
-                color: #79c7c5;
+                color: black;
                 margin-left: 14px;
                 font-size: 0.5em;
             }
@@ -76,14 +81,23 @@
         }
 
             .room:hover {
-                background: #f9fbff;
+                background: #b2b2b2;
                 transition: all 0.3s ease-in-out;
             }
 
         .focus {
-            background: #f9fbff;
             margin-left: 1px;
+            background: #b2b2b2;
         }
+
+        .background-light {
+            background: #f9fbff;
+        }
+
+        .background-dark {
+            background: #36393f;
+        }
+
 
         .profile {
             position: absolute;
@@ -121,7 +135,6 @@
         .top-bar {
             width: 100%;
             height: 60px;
-            background: #f9fbff;
             border-radius: 10px 10px 0 0;
         }
 
@@ -144,7 +157,6 @@
             position: absolute;
             top: 22px;
             text-transform: uppercase;
-            color: #777;
             font-size: 0.8em;
             letter-spacing: 2px;
             font-weight: 500;
@@ -165,9 +177,24 @@
                 transition: all 0.3s ease-in;
             }
 
+        .text-light {
+            color: #a1e2d9;
+        }
+
+        .text-light2 {
+            color: #777;
+        }
+
+        .text-light3 {
+            color: #36393f
+        }
+
+        .text-dark {
+            color: #ebebeb;
+        }
+
         .icons {
             position: absolute;
-            color: #a1e2d9;
             padding: 10px;
             top: 5px;
             right: 21px;
@@ -188,8 +215,16 @@
             width: 4px;
             height: 4px;
             border-radius: 50%;
+        }
+
+        .dots-light {
             background-color: #79c7c5;
             box-shadow: 0px 7px 0px #79c7c5, 0px 14px 0px #79c7c5;
+        }
+
+        .dots-dark {
+            background-color: #ebebeb;
+            box-shadow: 0px 7px 0px #ebebeb, 0px 14px 0px #ebebeb;
         }
 
         .middle {
@@ -285,8 +320,15 @@
             width: 100%;
             height: 55px;
             bottom: -38px;
-            background: #f9fbff;
             border-radius: 0 0 10px 10px;
+        }
+
+        .white-bar {
+            background: #f9fbff;
+        }
+
+        .gray-bar {
+            background: #36393f;
         }
 
         .left {
@@ -355,6 +397,32 @@
                     color: #a1e2d9;
                 }
 
+            #chatInput{
+                border-radius: 20px;
+            }
+
+            .input-dark {
+                background-color: rgb(255, 255, 255, .1);
+                color: #f9fbff;
+            }
+
+            .input-dark:focus {
+                color: #f9fbff;
+            }
+
+            .input-light {
+                background-color:  rgba(0, 0, 0, 0.068);
+                color: black;
+            }
+
+            .input-light:focus {
+                color: black;
+            }
+
+            .input-light::placeholder{
+                color: rgba(0, 0, 0, 0.479);
+            }
+
         @keyframes bounce {
             30% {
                 transform: translateY(-2px);
@@ -373,22 +441,23 @@
                 opacity: 0.5;
             }
         }
-       
+
     </style>
 </head>
-  <body>
+  <body id="body" class="lightMode">
     
       <div class="container">
           <div class="chatbox">
-              <div class="top-bar">
+              <div class="top-bar white-bar">
                   <div class="avatar"><p>CS</p></div>
-                  <div class="name" id=displayClassTittle>CS420 Class</div>
-                  <div class="icons">
+                  <div class="name text-light2" id=displayClassTittle>CS420 Class</div>
+                  <button style="right: 100px; background-color:transparent;"id="switchThemes" onclick="switchTheme()">DarkMode</button>
+                  <div class="icons text-light">
                       <i class="fas fa-phone"></i>
                       <i class="fas fa-video"></i>
                   </div>
                   <div class="menu">
-                      <div class="dots"></div>
+                      <div class="dots dots-light"></div>
                   </div>
               </div>
               <div class="middle" id ="messageBox1">
@@ -413,10 +482,10 @@
                         </div>
                     </div>
               
-              <div class="bottom-bar">
+              <div class="bottom-bar white-bar">
                   <div class="chat">
-                      <input type="text" id="chatInput" placeholder="Type a message..."/>
-                      <button type="submit" onclick="sendMsg()"><i class="fas fa-paper-plane"></i></button>
+                      <input type="text" id="chatInput" class="input-light" placeholder="Type a message..."/>
+                      <button style="background-color: transparent"type="submit" onclick="sendMsg()"><i class="fas fa-paper-plane"></i></button>
                   </div>
               </div>
           </div>
@@ -445,6 +514,7 @@
           </ul>
       </div>
       <script src="/socket.io/socket.io.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
       <script>
         // we want room to be mutatable 
         var room = 'CS420';
@@ -479,17 +549,17 @@
         };
 
         function sendMsg() {
-            self_sending = true;
-            var message = new Object;
-            message.msg = userName + ": " + document.getElementById("chatInput").value;
-            message.room = room;
-            // when you send message
-            socket.emit('message', {msg:message, room});
-            console.log(message);
-            document.getElementById("chatInput").value = null;
-            myFunction();
-            return false;
-            
+            if(document.getElementById("chatInput").value !== ""){
+                self_sending = true;
+                var message = new Object;
+                message.msg = userName + ": " + document.getElementById("chatInput").value;
+                message.room = room;
+                // when you send message
+                socket.emit('message', {msg:message, room});
+                console.log(message);
+                document.getElementById("chatInput").value = null;
+                return false;
+            }
         }      
        
         
@@ -600,6 +670,57 @@
                 room3 = true;
             }
         }
+
+        function switchTheme() {
+            const element = document.querySelector("#body");
+            const element2 = document.querySelector("#switchThemes");
+            const topBar = document.querySelector(".top-bar");
+            const bottomBar = document.querySelector(".bottom-bar");
+            const icons = document.querySelector(".icons");
+            const dots = document.querySelector(".dots");
+            const name = document.querySelector(".name");
+            const tab = document.querySelector(".focus");
+            const input = document.querySelector("#chatInput");
+
+            if(element.classList.contains("lightMode")){
+                element.classList.remove("lightMode");
+                element.classList.add("darkMode");
+                element2.innerHTML = "Light Mode";
+                topBar.classList.remove("white-bar");
+                topBar.classList.add("gray-bar");
+                bottomBar.classList.remove("white-bar");
+                bottomBar.classList.add("gray-bar");
+                icons.classList.remove("text-light");
+                icons.classList.add("text-dark");
+                dots.classList.remove("dots-light");
+                dots.classList.add("dots-dark");
+                name.classList.remove("text-light2");
+                name.classList.add("text-dark");
+                //tab.classList.remove("background-light");
+                //tab.classList.add("background-dark");
+                input.classList.remove("input-light");
+                input.classList.add("input-dark");
+            }  else{
+                element.classList.remove("darkMode");
+                element.classList.add("lightMode");
+                element2.innerHTML = "Dark Mode";
+                topBar.classList.remove("gray-bar");
+                topBar.classList.add("white-bar");
+                bottomBar.classList.remove("gray-bar");
+                bottomBar.classList.add("white-bar");
+                icons.classList.remove("text-dark");
+                icons.classList.add("text-light");
+                dots.classList.remove("dots-dark");
+                dots.classList.add("dots-light");
+                name.classList.remove("text-dark");
+                name.classList.add("text-light2");
+                //tab.classList.remove("background-dark");
+                //tab.classList.add("background-light");
+                input.classList.remove("input-dark");
+                input.classList.add("input-light");
+            }
+        }
+
       </script>
       </body>
 </html>
