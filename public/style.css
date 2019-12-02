@@ -48,7 +48,7 @@
   /* Login Page */
   
   .login.page {
-    background-color: rgb(255, 255, 255);
+    background: linear-gradient(to bottom left, #79c7c5 40%, #f9fbff 100%);
   }
   
   .login.page .form {
@@ -64,7 +64,7 @@
   .login.page .form .usernameInput {
     background-color: transparent;
     border: none;
-    border-bottom: 2px solid #000;
+    border-bottom: 2px solid #555;
     outline: none;
     padding-bottom: 15px;
     text-align: center;
@@ -81,7 +81,7 @@
   }
   
   .login.page .title, .login.page .usernameInput {
-    color: #000;
+    color: #555;
     font-weight: 100;
   }
   
