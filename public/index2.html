@@ -18,6 +18,34 @@
             font-family: 'Lato', sans-serif;
         }
 
+        h2 {
+            color: #fff;
+            font-family: sans-serif;
+            animation: animate 0.5s linear infinite;
+            font-size: 60px;
+            position: absolute;
+            margin: 0px;
+        }
+
+        @keyframes animate {
+            0%,100%
+            {
+                text-shadow: -1.5px -1.5px 0 #0ff, 1.5px 1.5px 0 #f00;
+            }
+            25%
+            {
+                text-shadow: 1.5px 1.5px 0 #0ff, -1.5px -1.5px 0 #f00;
+            }
+            50%
+            {
+                text-shadow: 1.5px -1.5px 0 #0ff, -1.5px 1.5px 0 #f00;
+            }
+            75%
+            {
+                text-shadow: -1.5px 1.5px 0 #0ff, 1.5px -1.5px 0 #f00;
+            }
+        }
+
         .lightMode {
             background: linear-gradient(to bottom left, #79c7c5 40%, #f9fbff 100%);
         }
@@ -445,7 +473,7 @@
     </style>
 </head>
   <body id="body" class="lightMode">
-    
+    <h2>TikTalk</h2>
       <div class="container">
           <div class="chatbox">
               <div class="top-bar white-bar">
@@ -651,7 +679,7 @@
             document.getElementById("secondTab").className = "room";
             document.getElementById("thirdTab").className = "room";
             // set room to the first tab
-            document.getElementById("displayClassTittle").innerHTML = "CS472 Class";
+            document.getElementById("displayClassTittle").innerHTML = "CS420 Class";
             // hide tab 2 and 3
             document.getElementById("messageBox2").style.display = "none";
             document.getElementById("messageBox3").style.display = "none";
@@ -665,7 +693,7 @@
             document.getElementById("firstTab").className = "room";
             document.getElementById("secondTab").className = "room focus";
             document.getElementById("thirdTab").className = "room";
-            document.getElementById("displayClassTittle").innerHTML = "CS420 class";
+            document.getElementById("displayClassTittle").innerHTML = "CS472 class";
             // hide tab 1 and 3
             document.getElementById("messageBox1").style.display = "none";
             document.getElementById("messageBox3").style.display = "none";

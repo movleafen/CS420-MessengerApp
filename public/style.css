@@ -146,3 +146,31 @@
     right: 0;
     width: 100%;
   }
+
+  h2 {
+    color: #fff;
+    font-family: sans-serif;
+    animation: animate 0.5s linear infinite;
+    font-size: 90px;
+    margin: 0px;
+    text-align: center;
+}
+
+@keyframes animate {
+    0%,100%
+    {
+        text-shadow: -1.5px -1.5px 0 #0ff, 1.5px 1.5px 0 #f00;
+    }
+    25%
+    {
+        text-shadow: 1.5px 1.5px 0 #0ff, -1.5px -1.5px 0 #f00;
+    }
+    50%
+    {
+        text-shadow: 1.5px -1.5px 0 #0ff, -1.5px 1.5px 0 #f00;
+    }
+    75%
+    {
+        text-shadow: -1.5px 1.5px 0 #0ff, 1.5px -1.5px 0 #f00;
+    }
+}
