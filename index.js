@@ -57,7 +57,7 @@ tech.on('connection', (socket) => {
     })
 
     socket.on('message', (data) =>{
-        console.log(`message from ${data.msg}`);
+        console.log(`message from ${data.msg.user}`);
         tech.in(data.room).emit('message', data.msg);
     });
 
