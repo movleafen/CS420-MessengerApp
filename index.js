@@ -1,8 +1,8 @@
-const app = require('express')();
-/*  ECMAscript 6: pretty much is the same as
-    var express = require('express');
-    const app = express();
-*/
+//const app = require('express')();
+// ECMAscript 6: pretty much is the same as
+var express = require('express');    
+const app = express();
+
 
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
@@ -37,6 +37,7 @@ app.get('/css', (req, res) => {
     res.sendFile(__dirname + '/public/css.html');
 });
 
+app.use(express.static('mascot'));
 
 
 // tech namespace
