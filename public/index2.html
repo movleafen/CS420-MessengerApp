@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <link rel="icon" type="image/png" href="themiccolor.png"/>
-    <link rel="icon" type="image/png" href="send.png"/>
     <title>TikTalk</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -440,6 +439,10 @@
                 color: #f9fbff;
             }
 
+            .input-light::placeholder{
+                color: #f9fbff;
+            }
+
             .input-light {
                 background-color:  rgba(0, 0, 0, 0.068);
                 color: black;
@@ -730,7 +733,7 @@
             const name = document.querySelector(".name");
             const tab = document.querySelector(".focus");
             const input = document.querySelector("#chatInput");
-
+            
             if(element.classList.contains("lightMode")){
                 element.classList.remove("lightMode");
                 element.classList.add("darkMode");
