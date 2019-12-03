@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <link rel="icon" type="image/png" href="themiccolor.png"/>
+    <link rel="icon" type="image/png" href="send.png"/>
     <title>TikTalk</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -481,13 +482,6 @@
                   <div class="avatar"><p>CS</p></div>
                   <div class="name text-light2" id=displayClassTittle>CS420 Class</div>
                   <button style="right: 100px; background-color:transparent;"id="switchThemes" onclick="switchTheme()">DarkMode</button>
-                  <div class="icons text-light">
-                      <i class="fas fa-phone"></i>
-                      <i class="fas fa-video"></i>
-                  </div>
-                  <div class="menu">
-                      <div class="dots dots-light"></div>
-                  </div>
               </div>
               <div class="middle" id ="messageBox1">
                   <div class="CS420" id="displayMessage1">
@@ -514,7 +508,7 @@
               <div class="bottom-bar white-bar">
                   <div class="chat">
                       <input type="text" id="chatInput" class="input-light" placeholder="Type a message..."/>
-                      <button style="background-color: transparent"type="submit" onclick="sendMsg()"><i class="fas fa-paper-plane"></i></button>
+                      <button style="top:8px;right:-4px;background-color: transparent"type="submit" onclick="sendMsg()"><img src="send.png" style="height: 50%; width: 50%;"></button>
                   </div>
               </div>
           </div>
